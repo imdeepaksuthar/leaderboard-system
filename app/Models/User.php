@@ -45,4 +45,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the activities for the user.
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+    /**
+     * Get the user's points.
+     */
+    public function points()
+    {
+        return $this->hasMany(Activity::class)->sum('points');
+    }
+    /**
+     * Get the user's rank.
+     */
+    public function rank()
+    {
+        return $this->hasMany(Activity::class)->orderBy('points', 'desc')->first()->rank;
+    }
 }
